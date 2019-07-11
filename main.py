@@ -241,7 +241,7 @@ def update_patient():
         _email = _json['email']
         _phone_number = _json['phone']
         _date_of_birth = _json['dob']
-        _doc_id = _json['dob']
+        _doc_id = _json['doctor_id']
         #validate the received values
         if _id and _name and _gender and _email and _date_of_birth and _phone_number is not 'None':
             #save edits
