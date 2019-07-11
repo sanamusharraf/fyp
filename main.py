@@ -197,6 +197,23 @@ def meaning():
     finally:
         cursor.close()
         conn.close()
+
+@app.route('/medicine',methods=['POST'])
+def medicine():
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        word = request.json['word']
+        cursor.execute("SELECT words FROM medicineterms WHERE words=%s",word)
+        row = cursor.fetchone()
+        resp = jsonify(row)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
     
 @app.route('/update_doctor', methods=['POST'])
 def update_doctor():
