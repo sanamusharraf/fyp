@@ -245,7 +245,7 @@ def update_patient():
         #validate the received values
         if _id and _name and _gender and _email and _date_of_birth and _phone_number is not 'None':
             #save edits
-            sql = "UPDATE patient SET pat_name=%s, pat_gender=%s , email=%s, phone=%s, dob=%s, doctor_id=%s WHERE pat_id=%s"
+            sql = "UPDATE patient SET pat_name=%s, pat_gender=%s , email=%s, phone=%s, dob=%s, doctor_id=%s WHERE idPatient=%s"
             data = ( _name, _gender, _email, _phone_number, _date_of_birth,_doc_id, _id)
             cursor.execute(sql, data)
             conn.commit()
