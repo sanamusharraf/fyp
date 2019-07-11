@@ -281,7 +281,7 @@ def delete_patient():
         conn = mysql.connect()
         cursor = conn.cursor()
         id = request.json['id']
-        cursor.execute("DELETE FROM patient WHERE pat_id=%s",id)
+        cursor.execute("DELETE FROM patient WHERE idPatient=%s",id)
         conn.commit()
         resp = jsonify('PATIENT deleted successfully')
         resp.status_code = 200
