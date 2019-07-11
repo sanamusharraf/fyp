@@ -170,7 +170,7 @@ def patient():
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         id = request.json['id']
-        cursor.execute("SELECT * FROM patient WHERE pat_id=%s",id)
+        cursor.execute("SELECT * FROM patient WHERE idPatient=%s",id)
         row = cursor.fetchone()
         resp = jsonify(row)
         resp.status_code = 200
@@ -241,12 +241,12 @@ def update_patient():
         _email = _json['email']
         _phone_number = _json['phone']
         _date_of_birth = _json['dob']
-        
+        _doc_id = _json['dob']
         #validate the received values
         if _id and _name and _gender and _email and _date_of_birth and _phone_number is not 'None':
             #save edits
-            sql = "UPDATE patient SET pat_name=%s, pat_gender=%s , email=%s, phone=%s, dob=%s WHERE pat_id=%s"
-            data = ( _name, _gender, _email, _phone_number, _date_of_birth, _id)
+            sql = "UPDATE patient SET pat_name=%s, pat_gender=%s , email=%s, phone=%s, dob=%s, doctor_id=%s WHERE pat_id=%s"
+            data = ( _name, _gender, _email, _phone_number, _date_of_birth,_doc_id, _id)
             cursor.execute(sql, data)
             conn.commit()
             resp = jsonify("PATIENT updated successfully!")
