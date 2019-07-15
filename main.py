@@ -10,13 +10,12 @@ def add_doctor():
     try:
         conn = mysql.connect()
         cursor = conn.cursor()
-        _json = request.get_json()
-        _gender = _json['gender']
-        _name = _json['name']
-        _password = _json['pwd']
-        _date_of_birth = _json['dob']
-        _phone_number = _json['phone']
-        _email = _json['email']
+        _gender = request.form['gender']
+        _name = request.form['name']
+        _password =request.form['pwd']
+        _date_of_birth = request.form['dob']
+        _phone_number =request.form['phone']
+        _email = request.form['email']
         
         if _name and _gender and _email and _password and _date_of_birth and _phone_number is not 'None':
             cursor.execute("SELECT * FROM doctor WHERE doc_email=%s",_email) 
