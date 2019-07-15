@@ -79,9 +79,10 @@ def add_patient():
         _phone_number = request.form['phone']
         _email = request.form['email']
         _doc_id=request.form['doc_id']
+        docid= int[_doc_id]
         if _name and _gender and _email and _date_of_birth and _phone_number and _doc_id is not None:
             sql = "INSERT INTO patient(pat_name,pat_gender,email,phone,dob,doctor_id) VALUES(%s,%s,%s,%s,%s,%s)"
-            data = ( _name, _gender,_email,_phone_number,_date_of_birth,_doc_id)
+            data = ( _name, _gender,_email,_phone_number,_date_of_birth,docid)
             cursor.execute(sql, data)
             conn.commit()
             resp = jsonify(success={"message":"PATIENT added  successfully!"})
