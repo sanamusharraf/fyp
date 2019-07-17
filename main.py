@@ -310,7 +310,26 @@ def delete_patient():
     finally:
         cursor.close()
         conn.close()
+def tokenResponse(msg,st):
+    return jsonify(token={"message":msg,"status":st})
 
+def setDefaultJwtTokenBehaviour():
+
+    @jwt.expired_token_loader
+    def expired_token_callback(expired_token):
+        return tokenResponse("Token Expired","1")
+
+
+    @jwt.invalid_token_loader
+    def invalid_token_callback(invalid_token):
+        return tokenResponse("Invalid Token","2")
+
+
+
+    @jwt.unauthorized_loader
+    def unauthorized_token_callback(invalid_token):
+        return tokenResponse("No token passed in request","3")
+        
 if __name__ == "__main__":
     setDefaultJwtTokenBehaviour()
     app.run(debug=True,port=80,host='0.0.0.0')
