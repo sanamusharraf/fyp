@@ -146,7 +146,9 @@ def patients():
         conn.close()
         
 @app.route('/doctor',methods=['POST'])
+@jwt_required
 def doctor():
+    current_user = get_jwt_identity()
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
