@@ -1,9 +1,11 @@
 import pymysql
-from app import app
+from app import app , jwt
 from db_config import mysql
 from flask import jsonify
 from flask import flash, request
 from flask_bcrypt import generate_password_hash,check_password_hash
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required,get_jwt_identity
 
 @app.route('/add_doctor',methods=['POST'])
 def add_doctor():
