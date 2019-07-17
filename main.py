@@ -55,7 +55,7 @@ def login_doctor():
         row = cursor.fetchone()
         if row is not None:
            if check_password_hash(row["doc_password"],_password) is True :
-                resp = jsonify(success={"message":"Login successfully"})
+                resp = jsonify(success={"message":"Login successfully","token": create_access_token(identity=row["doc_password"])})
                 resp.status_code = 200
                 return resp
            else:
