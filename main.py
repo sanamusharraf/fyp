@@ -312,5 +312,6 @@ def delete_patient():
         conn.close()
 
 if __name__ == "__main__":
+    setDefaultJwtTokenBehaviour()
     app.run(debug=True,port=80,host='0.0.0.0')
     
