@@ -7,7 +7,7 @@ import requests
 from requests.exceptions import HTTPError
 
 def textsummarizer(filepath):
-    f = open(filepath,"r")
+    f = open(filepath,"rb")
     text = f.read()
 
     # text =   """  Good morning, Dr. Sharma!
