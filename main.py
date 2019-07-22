@@ -1,4 +1,5 @@
 import pymysql
+import os
 from app import app , jwt
 from db_config import mysql
 from flask import jsonify
@@ -6,6 +7,27 @@ from flask import flash, request
 from flask_bcrypt import generate_password_hash,check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required,get_jwt_identity
+
+@app.route('/upload',methods=['POST'])
+def upload_file():
+    try:
+        target = os.path.join(app.config['UPLOAD_FOLDER'], 'unprocessed_files')
+        print("Target name is" + target)
+
+        if not os.path.isdir(target):
+            os.mkdir(target)
+
+        file = request.files['file']
+        filename = file.filename
+        f = '/'.join([target, filename])
+        print("Final Filename is "+ f)
+        file.save(f)
+        resp = jsonify('File Added successfully')
+        resp.status_code = 200
+        return resp
+    
+    except Exception as e:
+         print(e)
 
 @app.route('/add_doctor',methods=['POST'])
 def add_doctor():
