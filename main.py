@@ -6,6 +6,7 @@ from flask import flash, request
 from flask_bcrypt import generate_password_hash,check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required,get_jwt_identity
+from textsummarizer import textsummarizer
 
 @app.route('/upload',methods=['POST'])
 def upload_file():
@@ -26,8 +27,10 @@ def upload_file():
         return resp
     
     except Exception as e:
-         print(e)
-
+        print(e)
+    finally:
+        textsummarizer(f)
+        
 @app.route('/add_doctor',methods=['POST'])
 def add_doctor():
     try:
