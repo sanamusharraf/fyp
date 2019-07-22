@@ -1,10 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Mar 24 19:34:13 2019
 
-@author: bushr
-"""
-
+import os
 from flask import Flask
 from flask_jwt_extended import JWTManager
 app = Flask(__name__)

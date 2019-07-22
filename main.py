@@ -1,6 +1,5 @@
 import pymysql
-import os
-from app import app , jwt
+from app import app , jwt , os
 from db_config import mysql
 from flask import jsonify
 from flask import flash, request
