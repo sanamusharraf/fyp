@@ -27,8 +27,6 @@ def upload_file():
     
     except Exception as e:
         print(e)
-    finally:
-        textsummarizer(f)
         
 @app.route('/add_doctor',methods=['POST'])
 def add_doctor():
