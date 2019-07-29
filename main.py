@@ -28,7 +28,7 @@ def upload_file():
     except Exception as e:
         print(e)
         
-@app.route('/add_doctor',methods=['POST'])
+@app.rute('/add_doctor',methods=['POST'])
 def add_doctor():
     try:
         conn = mysql.connect()
