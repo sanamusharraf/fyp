@@ -120,22 +120,6 @@ def add_patient():
          cursor.close()
          conn.close()
 
-@app.route('/doctors')
-def doctors():
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("Select * from doctor")
-        rows = cursor.fetchall()
-        resp = jsonify(rows)
-        resp.status_code = 200
-        return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
-
 @app.route('/patients')
 def patients():
     try:
@@ -152,15 +136,15 @@ def patients():
         cursor.close()
         conn.close()
         
-@app.route('/doctor',methods=['POST'])
+@app.route('/getdoctorbyemail',methods=['POST'])
 @jwt_required
 def doctor():
     current_user = get_jwt_identity()
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        id = request.json['id']
-        cursor.execute("SELECT * FROM doctor WHERE doc_id=%s",id)
+        email = request.json['email']
+        cursor.execute("SELECT * FROM doctor WHERE doc_email=%s",email)
         row = cursor.fetchone()
         resp = jsonify(row)
         resp.status_code = 200
@@ -176,8 +160,8 @@ def patient():
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        phone = request.json['phone']
-        cursor.execute("SELECT * FROM patient WHERE phone=%s",phone)
+        id = request.json['mrn']
+        cursor.execute("SELECT * FROM patient WHERE idPatient=%s",id)
         row = cursor.fetchone()
         resp = jsonify(row)
         resp.status_code = 200
