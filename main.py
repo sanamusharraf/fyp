@@ -27,7 +27,9 @@ def upload_file():
     
     except Exception as e:
         print(e)
-        
+
+
+                                                    #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
 def add_doctor():
     try:
@@ -63,7 +65,8 @@ def add_doctor():
     finally:
          cursor.close()
          conn.close()
-         
+
+                                                    #LOGIN DOCTOR         
 @app.route('/login_doctor',methods=['POST'])
 def login_doctor():
     try:
@@ -90,7 +93,28 @@ def login_doctor():
     finally:
          cursor.close()
          conn.close()
-    
+
+                                            #GET DOCOTR BY EMAIL
+@app.route('/getdoctorbyemail',methods=['POST'])
+@jwt_required
+def doctor():
+    current_user = get_jwt_identity()
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        email = request.json['email']
+        cursor.execute("SELECT * FROM doctor WHERE doc_email=%s",email)
+        row = cursor.fetchone()
+        resp = jsonify(row)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+
+                                                #ADD PATIENT
 @app.route('/add_patient',methods=['POST'])
 def add_patient():
     try:
@@ -120,12 +144,14 @@ def add_patient():
          cursor.close()
          conn.close()
 
-@app.route('/patients')
+                                                #GET ALL PATIENTS
+@app.route('/getallpatients')
 def patients():
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("Select * from patient")
+        id = request.json['id']
+        cursor.execute("Select * from patient where doctor_id=%s",id)
         rows = cursor.fetchall()
         resp = jsonify(rows)
         resp.status_code = 200
@@ -135,16 +161,15 @@ def patients():
     finally:
         cursor.close()
         conn.close()
-        
-@app.route('/getdoctorbyemail',methods=['POST'])
-@jwt_required
-def doctor():
-    current_user = get_jwt_identity()
+
+                                            #GET PATIENT BY PHONE        
+@app.route('/getpatientbyphone',methods=['POST'])
+def patient():
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        email = request.json['email']
-        cursor.execute("SELECT * FROM doctor WHERE doc_email=%s",email)
+        cellphone = request.json['cellphone']
+        cursor.execute("SELECT * FROM patient WHERE phone=%s",cellphone)
         row = cursor.fetchone()
         resp = jsonify(row)
         resp.status_code = 200
@@ -155,23 +180,7 @@ def doctor():
         cursor.close()
         conn.close()
 
-@app.route('/patient',methods=['POST'])
-def patient():
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        id = request.json['mrn']
-        cursor.execute("SELECT * FROM patient WHERE idPatient=%s",id)
-        row = cursor.fetchone()
-        resp = jsonify(row)
-        resp.status_code = 200
-        return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
-        
+                                            #CANCER TERMS MEANING        
 @app.route('/meaning',methods=['POST'])
 def meaning():
     try:
@@ -189,6 +198,7 @@ def meaning():
         cursor.close()
         conn.close()
 
+                                                #MEDICINE TERMS 
 @app.route('/medicine',methods=['POST'])
 def medicine():
     try:
@@ -206,99 +216,99 @@ def medicine():
         cursor.close()
         conn.close()
     
-@app.route('/update_doctor', methods=['POST'])
-def update_doctor():
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        _json = request.json
-        _id = _json['id']
-        _name = _json['name']
-        _gender = _json['gender']
-        _email = _json['email']
-        _password = _json['pwd']
-        _phone_number = _json['phone']
-        _date_of_birth = _json['dob']
+# @app.route('/update_doctor', methods=['POST'])
+# def update_doctor():
+#     try:
+#         conn = mysql.connect()
+#         cursor = conn.cursor()
+#         _json = request.json
+#         _id = _json['id']
+#         _name = _json['name']
+#         _gender = _json['gender']
+#         _email = _json['email']
+#         _password = _json['pwd']
+#         _phone_number = _json['phone']
+#         _date_of_birth = _json['dob']
         
-        #validate the received values
-        if _id and _name and _gender and _email and _password and _date_of_birth and _phone_number is not 'None':
-            _hashed_password = generate_password_hash(_password)
-            #save edits
-            sql = "UPDATE doctor SET doc_name=%s, doc_gender=%s , doc_email=%s, doc_password=%s, phone=%s, dob=%s WHERE doc_id=%s"
-            data = ( _name, _gender, _email, _hashed_password, _phone_number, _date_of_birth, _id)
-            cursor.execute(sql, data)
-            conn.commit()
-            resp = jsonify("DOCTOR updated successfully!")
-            resp.status_code = 200
-            return resp
-    except Exception as e:
-            print(e)
-    finally:
-        cursor.close()
-        conn.close()
+#         #validate the received values
+#         if _id and _name and _gender and _email and _password and _date_of_birth and _phone_number is not 'None':
+#             _hashed_password = generate_password_hash(_password)
+#             #save edits
+#             sql = "UPDATE doctor SET doc_name=%s, doc_gender=%s , doc_email=%s, doc_password=%s, phone=%s, dob=%s WHERE doc_id=%s"
+#             data = ( _name, _gender, _email, _hashed_password, _phone_number, _date_of_birth, _id)
+#             cursor.execute(sql, data)
+#             conn.commit()
+#             resp = jsonify("DOCTOR updated successfully!")
+#             resp.status_code = 200
+#             return resp
+#     except Exception as e:
+#             print(e)
+#     finally:
+#         cursor.close()
+#         conn.close()
 
-@app.route('/update_patient', methods=['POST'])
-def update_patient():
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        _json = request.json
-        _id = _json['id']
-        _name = _json['name']
-        _gender = _json['gender']
-        _email = _json['email']
-        _phone_number = _json['phone']
-        _date_of_birth = _json['dob']
-        _doc_id = _json['doctor_id']
-        #validate the received values
-        if _id and _name and _gender and _email and _date_of_birth and _phone_number is not 'None':
-            #save edits
-            sql = "UPDATE patient SET pat_name=%s, pat_gender=%s , email=%s, phone=%s, dob=%s, doctor_id=%s WHERE idPatient=%s"
-            data = ( _name, _gender, _email, _phone_number, _date_of_birth,_doc_id, _id)
-            cursor.execute(sql, data)
-            conn.commit()
-            resp = jsonify("PATIENT updated successfully!")
-            resp.status_code = 200
-            return resp
-    except Exception as e:
-            print(e)
-    finally:
-        cursor.close()
-        conn.close()
+# @app.route('/update_patient', methods=['POST'])
+# def update_patient():
+#     try:
+#         conn = mysql.connect()
+#         cursor = conn.cursor()
+#         _json = request.json
+#         _id = _json['id']
+#         _name = _json['name']
+#         _gender = _json['gender']
+#         _email = _json['email']
+#         _phone_number = _json['phone']
+#         _date_of_birth = _json['dob']
+#         _doc_id = _json['doctor_id']
+#         #validate the received values
+#         if _id and _name and _gender and _email and _date_of_birth and _phone_number is not 'None':
+#             #save edits
+#             sql = "UPDATE patient SET pat_name=%s, pat_gender=%s , email=%s, phone=%s, dob=%s, doctor_id=%s WHERE idPatient=%s"
+#             data = ( _name, _gender, _email, _phone_number, _date_of_birth,_doc_id, _id)
+#             cursor.execute(sql, data)
+#             conn.commit()
+#             resp = jsonify("PATIENT updated successfully!")
+#             resp.status_code = 200
+#             return resp
+#     except Exception as e:
+#             print(e)
+#     finally:
+#         cursor.close()
+#         conn.close()
 
-@app.route('/delete_doctor',methods = ['POST'])
-def delete_doctor():
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        id = request.json['id']
-        cursor.execute("DELETE FROM doctor WHERE doc_id=%s",id)
-        conn.commit()
-        resp = jsonify('DOCTOR deleted successfully')
-        resp.status_code = 200
-        return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
+# @app.route('/delete_doctor',methods = ['POST'])
+# def delete_doctor():
+#     try:
+#         conn = mysql.connect()
+#         cursor = conn.cursor()
+#         id = request.json['id']
+#         cursor.execute("DELETE FROM doctor WHERE doc_id=%s",id)
+#         conn.commit()
+#         resp = jsonify('DOCTOR deleted successfully')
+#         resp.status_code = 200
+#         return resp
+#     except Exception as e:
+#         print(e)
+#     finally:
+#         cursor.close()
+#         conn.close()
 
-@app.route('/delete_patient',methods = ['POST'])
-def delete_patient():
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        id = request.json['id']
-        cursor.execute("DELETE FROM patient WHERE idPatient=%s",id)
-        conn.commit()
-        resp = jsonify('PATIENT deleted successfully')
-        resp.status_code = 200
-        return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
+# @app.route('/delete_patient',methods = ['POST'])
+# def delete_patient():
+#     try:
+#         conn = mysql.connect()
+#         cursor = conn.cursor()
+#         id = request.json['id']
+#         cursor.execute("DELETE FROM patient WHERE idPatient=%s",id)
+#         conn.commit()
+#         resp = jsonify('PATIENT deleted successfully')
+#         resp.status_code = 200
+#         return resp
+#     except Exception as e:
+#         print(e)
+#     finally:
+#         cursor.close()
+#         conn.close()
 
 def tokenResponse(msg,st):
     return jsonify(token={"message":msg,"status":st})
@@ -313,8 +323,6 @@ def setDefaultJwtTokenBehaviour():
     @jwt.invalid_token_loader
     def invalid_token_callback(invalid_token):
         return tokenResponse("Invalid Token","2")
-
-
 
     @jwt.unauthorized_loader
     def unauthorized_token_callback(invalid_token):
