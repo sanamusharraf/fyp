@@ -137,11 +137,11 @@ def add_patient():
                 data = ( _name, _gender,_email,_phone_number,_date_of_birth,_doc_id)
                 cursor.execute(sql, data)
                 conn.commit()
-                resp = jsonify(success={"message":"PATIENT added  successfully!"})
+                resp = jsonify(success={"message":"PATIENT added successfully!"})
                 resp.status_code = 200
                 return resp
             else:
-                resp = jsonify(error={"message":"Email already exists!"})
+                resp = jsonify(error={"message":"Patient already exists!"})
                 return resp
         else:
             resp = jsonify(error={"message":"Error"})
@@ -155,7 +155,7 @@ def add_patient():
                                                 #GET ALL PATIENTS
 @app.route('/getallpatients')
 @jwt_required
-def patients():
+def getallpatients():
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -174,7 +174,7 @@ def patients():
                                             #GET PATIENT BY PHONE        
 @app.route('/getpatientbyphone',methods=['POST'])
 @jwt_required
-def patient():
+def getpatientbyphone():
     try:
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
