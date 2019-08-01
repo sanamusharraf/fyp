@@ -8,6 +8,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required,get_jwt_identity
 
 @app.route('/upload',methods=['POST'])
+@jwt_required
 def upload_file():
     try:
         target = os.path.join(app.config['UPLOAD_FOLDER'], 'AudioFiles')
@@ -116,6 +117,7 @@ def doctor():
 
                                                 #ADD PATIENT
 @app.route('/add_patient',methods=['POST'])
+@jwt_required
 def add_patient():
     try:
         conn = mysql.connect()
