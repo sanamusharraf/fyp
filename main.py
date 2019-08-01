@@ -95,10 +95,10 @@ def login_doctor():
          cursor.close()
          conn.close()
 
-                                            #GET DOCOTR BY EMAIL
+                                            #GET DOCTOR BY EMAIL
 @app.route('/getdoctorbyemail',methods=['POST'])
 @jwt_required
-def doctor():
+def getdoctorbyemail():
     current_user = get_jwt_identity()
     try:
         conn = mysql.connect()
@@ -128,15 +128,21 @@ def add_patient():
         _phone_number = request.form['phone']
         _email = request.form['email']
         _doc_id=request.form['doc_id']
-        docid= int(_doc_id)
+       
         if _name and _gender and _email and _date_of_birth and _phone_number and _doc_id is not None:
-            sql = "INSERT INTO patient(pat_name,pat_gender,email,phone,dob,doctor_id) VALUES(%s,%s,%s,%s,%s,%s)"
-            data = ( _name, _gender,_email,_phone_number,_date_of_birth,docid)
-            cursor.execute(sql, data)
-            conn.commit()
-            resp = jsonify(success={"message":"PATIENT added  successfully!"})
-            resp.status_code = 200
-            return resp
+            cursor.execute("SELECT * FROM patient WHERE phone=%s",_phone_number) 
+            row = cursor.fetchone()
+            if row is None:
+                sql = "INSERT INTO patient(pat_name,pat_gender,email,phone,dob,doctor_id) VALUES(%s,%s,%s,%s,%s,%s)"
+                data = ( _name, _gender,_email,_phone_number,_date_of_birth,_doc_id)
+                cursor.execute(sql, data)
+                conn.commit()
+                resp = jsonify(success={"message":"PATIENT added  successfully!"})
+                resp.status_code = 200
+                return resp
+            else:
+                resp = jsonify(error={"message":"Email already exists!"})
+                return resp
         else:
             resp = jsonify(error={"message":"Error"})
             return resp
