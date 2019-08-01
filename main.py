@@ -165,6 +165,7 @@ def patients():
 
                                             #GET PATIENT BY PHONE        
 @app.route('/getpatientbyphone',methods=['POST'])
+@jwt_required
 def patient():
     try:
         conn = mysql.connect()
