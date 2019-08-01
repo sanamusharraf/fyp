@@ -146,6 +146,7 @@ def add_patient():
 
                                                 #GET ALL PATIENTS
 @app.route('/getallpatients')
+@jwt_required
 def patients():
     try:
         conn = mysql.connect()
