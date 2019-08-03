@@ -8,7 +8,6 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required,get_jwt_identity
 
 @app.route('/upload',methods=['POST'])
-@jwt_required
 def upload_file():
     try:
         target = os.path.join(app.config['UPLOAD_FOLDER'], 'AudioFiles')
@@ -97,7 +96,6 @@ def login_doctor():
 
                                             #GET DOCTOR BY EMAIL
 @app.route('/getdoctorbyemail',methods=['POST'])
-@jwt_required
 def getdoctorbyemail():
     current_user = get_jwt_identity()
     try:
@@ -117,7 +115,6 @@ def getdoctorbyemail():
 
                                                 #ADD PATIENT
 @app.route('/add_patient',methods=['POST'])
-@jwt_required
 def add_patient():
     try:
         conn = mysql.connect()
@@ -154,7 +151,6 @@ def add_patient():
 
                                                 #GET ALL PATIENTS
 @app.route('/getallpatients')
-@jwt_required
 def getallpatients():
     try:
         conn = mysql.connect()
@@ -173,7 +169,6 @@ def getallpatients():
 
                                             #GET PATIENT BY PHONE        
 @app.route('/getpatientbyphone',methods=['POST'])
-@jwt_required
 def getpatientbyphone():
     try:
         conn = mysql.connect()
