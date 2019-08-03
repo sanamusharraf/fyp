@@ -185,6 +185,24 @@ def getpatientbyphone():
         cursor.close()
         conn.close()
 
+                                            #GET PATIENT BY Id        
+@app.route('/getpatientbyid',methods=['POST'])
+def getpatientbyid():
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        id = request.json['id']
+        cursor.execute("SELECT * FROM patient WHERE idPatient=%s",id)
+        row = cursor.fetchone()
+        resp = jsonify(row)
+        resp.status_code = 200
+        return resp
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+
                                             #CANCER TERMS MEANING        
 @app.route('/meaning',methods=['POST'])
 def meaning():
