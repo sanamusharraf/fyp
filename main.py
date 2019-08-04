@@ -45,7 +45,7 @@ def upload_file():
         wav_file = os.path.splitext(filepath)[0] + '.wav'
         print(wav_file)
         sound = AudioSegment.from_file(filepath, "mp4")
-        sound.export(wav_file, format="wav")
+        p = sound.export(wav_file, format="wav")
         os.remove(filepath)
 
     #    if os.path.splitext(filepath)[1] == ".mp3":
@@ -57,7 +57,7 @@ def upload_file():
 
        #speech to text module
         rec = sr.Recognizer()
-        audioFile = filepath
+        audioFile = p
         with sr.AudioFile(audioFile) as sourceFile:
             audio = rec.record(sourceFile) 
         try:
