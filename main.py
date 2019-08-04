@@ -57,7 +57,7 @@ def upload_file():
 
        #speech to text module
         rec = sr.Recognizer()
-        audioFile = "audio file from the API"
+        audioFile = filepath
         with sr.AudioFile(audioFile) as sourceFile:
             audio = rec.record(sourceFile) 
         try:
