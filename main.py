@@ -57,7 +57,7 @@ def upload_file():
 
        #speech to text module
         rec = sr.Recognizer()
-        audioFile = p
+        audioFile = os.path.abspath(os.path.join(basepath, "AudioFiles", wav_file))
         with sr.AudioFile(audioFile) as sourceFile:
             audio = rec.record(sourceFile) 
         try:
