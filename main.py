@@ -43,6 +43,8 @@ def upload_file():
         print(e)
 
     finally:
+        cursor.close()
+        conn.close()
         basepath = os.path.dirname(__file__)
         filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", "testing.m4a"))
         print(filepath)
