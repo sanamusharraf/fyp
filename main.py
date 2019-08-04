@@ -41,6 +41,7 @@ def upload_file():
 
        if os.path.splitext(filepath)[1] == ".mp3":
             wav_file = os.path.splitext(filepath)[0] + '.wav'
+            print(wav_file)
             sound = AudioSegment.from_mp3(filepath)
             sound.export(wav_file, format="wav")
             os.remove(filepath)
