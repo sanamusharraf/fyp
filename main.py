@@ -6,6 +6,7 @@ from flask import flash, request
 from flask_bcrypt import generate_password_hash,check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required,get_jwt_identity
+from pydub import AudioSegment
 
 @app.route('/upload',methods=['POST'])
 def upload_file():
@@ -28,6 +29,21 @@ def upload_file():
     except Exception as e:
         print(e)
 
+    finally:
+       basepath = os.path.dirname(__file__)
+       filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
+       
+       if os.path.splitext(filepath)[1] == ".mp4":
+            wav_file = os.path.splitext(filepath)[0] + '.wav'
+            sound = AudioSegment.from_file(filepath, "mp4")
+            sound.export(wav_file, format="wav")
+            os.remove(filepath)
+
+       if os.path.splitext(filepath)[1] == ".mp3":
+            wav_file = os.path.splitext(filepath)[0] + '.wav'
+            sound = AudioSegment.from_mp3(filepath)
+            sound.export(wav_file, format="wav")
+            os.remove(filepath)
 
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
