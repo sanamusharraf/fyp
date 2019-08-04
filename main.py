@@ -35,6 +35,7 @@ def upload_file():
        print(filepath)
        
        wav_file = os.path.splitext(filepath)[0] + '.wav'
+       print(wav_file)
        sound = AudioSegment.from_file(filepath, "mp4")
        sound.export(wav_file, format="wav")
        os.remove(filepath)
