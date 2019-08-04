@@ -44,7 +44,7 @@ def upload_file():
 
     finally:
         basepath = os.path.dirname(__file__)
-        filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
+        filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", "testing.m4a"))
         print(filepath)
         
         wav_file = os.path.splitext(filepath)[0] + '.wav'
