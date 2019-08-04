@@ -33,11 +33,11 @@ def upload_file():
        basepath = os.path.dirname(__file__)
        filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
        print(filepath)
-       if os.path.splitext(filepath)[1] == ".mp4":
-            wav_file = os.path.splitext(filepath)[0] + '.wav'
-            sound = AudioSegment.from_file(filepath, "mp4")
-            sound.export(wav_file, format="wav")
-            os.remove(filepath)
+       
+       wav_file = os.path.splitext(filepath)[0] + '.wav'
+       sound = AudioSegment.from_file(filepath, "mp4")
+       sound.export(wav_file, format="wav")
+       os.remove(filepath)
 
        if os.path.splitext(filepath)[1] == ".mp3":
             wav_file = os.path.splitext(filepath)[0] + '.wav'
