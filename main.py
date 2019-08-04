@@ -19,6 +19,11 @@ import speech_recognition as sr
 @app.route('/upload',methods=['POST'])
 def upload_file():
     try:
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        _json = request.get_json()
+        _patientid = _json['patientid']
+        _doctorid = _json['doctorid']
         target = os.path.join(app.config['UPLOAD_FOLDER'], 'AudioFiles')
         print("Target name is" + target)
 
@@ -73,7 +78,6 @@ def upload_file():
         clean_text = re.sub(r'\d',' ',clean_text)
         clean_text = re.sub(r'\s+',' ',clean_text)
         
-        nltk.download()
         sentences = nltk.sent_tokenize(text)
 
         stop_words = nltk.corpus.stopwords.words('english')    
@@ -81,7 +85,7 @@ def upload_file():
         #Figuring out cancer terms and medicine prescribed in the conversation
         #tokenizing the sentences
         words = nltk.word_tokenize(text)
-
+        print(words)
         #applying part of speech on each individual word
         tagged_words = nltk.pos_tag(words)
 
@@ -196,21 +200,21 @@ def upload_file():
         #SMS Notification service 
         # Your Account Sid and Auth Token from twilio.com/console
         # DANGER! This is insecure. See http://twil.io/secure
-        account_sid = 'AC7a2b65e083d198102faa11d2c843b8d6'
-        auth_token = '79df71c72260a725c3eae0ae9a5963b6'
+        account_sid = 'ACf4d7dbef3db9c3cb91bf5e0229e911e6'
+        auth_token = '06d66a99cf675e22b6bd459c9326c77f'
         summary = 'Cancer Terms: \n'+string_health_terms + '\n\n Medicine Prescribed: \n' + string_medicine+ '\n\n Overall Summary: \n'+ string_overall_summary+ '\n Medicine Summary: \n'+ string_medicine_summary
         client = Client(account_sid, auth_token)
 
-        message = client.messages \
-                        .create(
-                            body=summary,
-                            from_='+12019322596',
-                            to=phoneNumber
-                        )
+        # message = client.messages \
+        #                 .create(
+        #                     body=summary,
+        #                     from_='+12019322596',
+        #                     to=phoneNumber
+        #                 )
 
         #Email Notification
         email_from = "ekohealthsolutions@gmail.com"
-        email_to = email
+        email_to = "sanamusharraf171@gmail.com"
         message = summary
         password = "ekohealth2019"
 
