@@ -49,8 +49,8 @@ def upload_file():
         
         wav_file = os.path.splitext(filepath)[0] + '.wav'
         print(wav_file)
-        sound = AudioSegment.from_file(filepath, "mp4")
-        p = sound.export(wav_file, format="wav")
+        sound = AudioSegment.from_file(filepath)
+        sound.export(wav_file, format="wav")
         os.remove(filepath)
 
     #    if os.path.splitext(filepath)[1] == ".mp3":
