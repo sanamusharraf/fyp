@@ -21,9 +21,8 @@ def upload_file():
     try:
         conn = mysql.connect()
         cursor = conn.cursor()
-        _json = request.get_json()
-        _patientid = _json['patientid']
-        _doctorid = _json['doctorid']
+        _patientid = request.form['patientid']
+        _doctorid = request.form['doctorid']
         target = os.path.join(app.config['UPLOAD_FOLDER'], 'AudioFiles')
         print("Target name is" + target)
 
