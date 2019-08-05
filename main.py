@@ -30,6 +30,7 @@ def upload_file():
             os.mkdir(target)
 
         file = request.files['file']
+        print(file)
         filename = file.filename
         f = '/'.join([target, filename])
         print("Final Filename is "+ f)
