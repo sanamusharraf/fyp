@@ -265,8 +265,38 @@ def upload_file():
 
         best_sentences = heapq.nlargest(5,sent2score,key=sent2score.get)
         best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
-        print(best_sentence)
-        print(best_sentences)
+        
+        #converting list into string of cancer terms
+        string_health_terms = '\n'.join(health_terms)
+        
+        #converting list into string of medicine prescribed
+        string_medicine = '\n'.join(medicines)
+        
+        #Overall Summary
+        string_overall_summary = ''
+        for sentence in best_sentences:
+            string_overall_summary = string_overall_summary + sentence + '\n'
+        print(string_overall_summary)
+            
+        #Medicine Summary
+        string_medicine_summary = ''
+        for sentence in best_sentence:
+            string_medicine_summary = string_medicine_summary + sentence + '\n'  
+        print(string_medicine_summary)    
+            
+        summary = 'Cancer Terms: \n'+string_health_terms + '\n\n Medicine Prescribed: \n' + string_medicine+ '\n\n Overall Summary: \n'+ string_overall_summary+ '\n Medicine Summary: \n'+ string_medicine_summary
+        
+        #Email Notification
+        email_from = "ekohealthsolutions@gmail.com"
+        email_to = "sanamusharraf171@gmail.com"
+        message = summary
+        password = "ekohealth2019"
+
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.starttls()
+        server.login(email_from,password)
+        server.sendmail(email_from,email_to,message)
+        server.quit()   
 
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
