@@ -28,13 +28,13 @@ def upload_file():
 
         if not os.path.isdir(target):
             os.mkdir(target)
-
+        print("Hi")
+        
         file = request.files['file']
-        print(file)
-        filename = file.filename
-        f = '/'.join([target, filename])
-        print("Final Filename is "+ f)
-        file.save(f)
+        # filename = file.filename
+        # f = '/'.join([target, filename])
+        # print("Final Filename is "+ f)
+        # file.save(f)
         resp = jsonify('File Added successfully')
         resp.status_code = 200
         return resp
