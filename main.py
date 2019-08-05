@@ -96,7 +96,7 @@ def upload_file():
         health_terms={}       
         for wt in word_tags:
             try:
-                response = requests.post('http://localhost:5000/meaning', json={'word':wt}, timeout=(2))
+                response = requests.post('http://34.68.232.47/meaning', json={'word':wt}, timeout=(2))
             except HTTPError as http_err:
                 print(f'HTTP error occurred: {http_err}')
             except Exception as err:
@@ -112,7 +112,7 @@ def upload_file():
         medicines=[]      
         for wt in word_tags:
             try:
-                response = requests.post('http://localhost:5000/medicine', json={'word':wt}, timeout=(3))
+                response = requests.post('http://34.68.232.47/medicine', json={'word':wt}, timeout=(3))
             except HTTPError as http_err:
                 print(f'HTTP error occurred: {http_err}')
             except Exception as err:
