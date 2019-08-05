@@ -251,9 +251,10 @@ def upload_file():
                     if len(sentence.split(' ')) < 30:
                         if sentence not in sent2score.keys():
                             for ht in health_terms.keys():
+                                print(ht)
                                 if word in ht:                
                                     sent2score[sentence] = 10
-        print(sent2score)                            
+                                  
                                     
         #Medicine related summary of the conversation
         for sentence in sentences:
