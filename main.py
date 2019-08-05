@@ -181,33 +181,8 @@ def upload_file():
             string_medicine_summary = string_medicine_summary + sentence + '\n'  
             
             
-        #fetching patient information from API's
-        try:
-            response = requests.post('http://34.68.232.47/patient', json={"id":"3"}, timeout=2)
-        except HTTPError as http_err:
-            print(f'HTTP error occurred: {http_err}')
-        except Exception as err:
-            print(f'Other error occurred: {err}')  # Python 3.6
-        else:
-            json_response = response.json()
-            email = json_response['email']
-            phoneNumber = json_response['phone']
+        print(string_overall_summary)
 
-        #SMS Notification service 
-        # Your Account Sid and Auth Token from twilio.com/console
-        # DANGER! This is insecure. See http://twil.io/secure
-        account_sid = 'ACf4d7dbef3db9c3cb91bf5e0229e911e6'
-        auth_token = '06d66a99cf675e22b6bd459c9326c77f'
-        summary = 'Cancer Terms: \n'+string_health_terms + '\n\n Medicine Prescribed: \n' + string_medicine+ '\n\n Overall Summary: \n'+ string_overall_summary+ '\n Medicine Summary: \n'+ string_medicine_summary
-        client = Client(account_sid, auth_token)
-
-    
-        # message = client.messages \
-        #                 .create(
-        #                     body=summary,
-        #                     from_='+14803970895',
-        #                     to=phoneNumber
-        #                 )
 
         #Email Notification
         email_from = "ekohealthsolutions@gmail.com"
