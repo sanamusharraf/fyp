@@ -241,12 +241,9 @@ def upload_file():
         best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
         
         #converting list into string of cancer terms
-        for keys in health_terms:
-            string_health_terms = health_terms.keys()+':'+ health_terms[keys]
-
-
-        # string_health_terms = '\n'.join(health_terms)
+        string_health_terms = '\n'.join(health_terms)
         print(string_health_terms)
+        
         #converting list into string of medicine prescribed
         string_medicine = '\n'.join(medicines)
         
@@ -255,7 +252,6 @@ def upload_file():
         for sentence in best_sentences:
             string_overall_summary = string_overall_summary + sentence + '\n'
        
-            
         #Medicine Summary
         string_medicine_summary = ''
         for sentence in best_sentence:
@@ -267,7 +263,7 @@ def upload_file():
         print(summary)
         #Email Notification
         email_from = "ekohealthsolutions@gmail.com"
-        email_to = "sanamusharraf171@gmail.com"
+        email_to = _patient_email
         message = summary
         password = "ekohealth2019"
 
