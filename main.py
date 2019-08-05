@@ -162,8 +162,8 @@ def upload_file():
                         
         best_sentences = heapq.nlargest(5,sent2score,key=sent2score.get)
         best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
-        print("Best Sentences are"+ best_sentences)
-        print("Best Sentence are"+ best_sentence)
+        print(best_sentences)
+        print(best_sentence)
         #converting list into string of cancer terms
         string_health_terms = '\n'.join(health_terms)
 
