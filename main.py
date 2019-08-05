@@ -252,8 +252,8 @@ def upload_file():
                         for ht in health_terms.keys():
                             if word in ht:                
                                 sent2score[sentence] = 10
-                                print(sent2score)  
-                                    
+                                
+        print(sent2score)                              
         #Medicine related summary of the conversation
         for sentence in sentences:
             for word in nltk.word_tokenize(sentence.lower()):
