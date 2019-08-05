@@ -65,7 +65,33 @@ def upload_file():
             print(e)    
         
         print(text)
-        print("hi")
+
+        #preprocessing the data
+        text = re.sub(r'\[[0-9]*\]',' ',text)
+        text = re.sub(r'\s+',' ',text)
+        clean_text = text.lower()
+        clean_text = re.sub(r'\W',' ',clean_text)
+        clean_text = re.sub(r'\d',' ',clean_text)
+        clean_text = re.sub(r'\s+',' ',clean_text)
+        
+        sentences = nltk.sent_tokenize(text)
+
+        stop_words = nltk.corpus.stopwords.words('english')    
+
+        #Figuring out cancer terms and medicine prescribed in the conversation
+        #tokenizing the sentences
+        words = nltk.word_tokenize(text)
+        print(words)
+        #applying part of speech on each individual word
+        tagged_words = nltk.pos_tag(words)
+
+        #collecting all the nouns in a seperate list
+        word_tags=[]
+        for tw in tagged_words:
+            if tw[1] == "NN" or tw[1] == "NNS" or tw[1] == "NNP" or tw[1] == "NNPS":
+                word_tags.append(tw[0])
+                
+                
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
 def add_doctor():
