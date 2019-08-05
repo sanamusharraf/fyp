@@ -261,11 +261,12 @@ def upload_file():
                         for m in medicines:
                             if word in m:
                                 sent3score[sentence] = 10
-        print(sent3score) 
+        
 
         best_sentences = heapq.nlargest(5,sent2score,key=sent2score.get)
         best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
-        
+        print(best_sentence)
+        print(best_sentences)
 
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
