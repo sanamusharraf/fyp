@@ -48,11 +48,11 @@ def upload_file():
         filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
         print(filepath)
 
-        # wav_file = os.path.splitext(filepath)[0] + '.wav'
-        # print(wav_file)
-        # sound = AudioSegment.from_file(filepath)
-        # sound.export(wav_file, format="wav")
-        # os.remove(filepath)
+        wav_file = os.path.splitext(filepath)[0] + '.wav'
+        print(wav_file)
+        sound = AudioSegment.from_file(filepath)
+        sound.export(wav_file, format="wav")
+        os.remove(filepath)
 
         # #speech to text module
         # rec = sr.Recognizer()
