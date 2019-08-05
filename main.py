@@ -90,7 +90,40 @@ def upload_file():
         for tw in tagged_words:
             if tw[1] == "NN" or tw[1] == "NNS" or tw[1] == "NNP" or tw[1] == "NNPS":
                 word_tags.append(tw[0])
-                
+
+          
+        #fetching cancer terms meaning from the API's
+        health_terms={}       
+        for wt in word_tags:
+            try:
+                response = requests.post('http://localhost:5000/meaning', json={'word':wt}, timeout=(2))
+            except HTTPError as http_err:
+                print(f'HTTP error occurred: {http_err}')
+            except Exception as err:
+                print(f'Other error occurred: {err}')  # Python 3.6
+            else:
+                json_response = response.json()
+                if(json_response is not None):
+                    health_terms.update({wt:json_response['meaning']})
+                else:
+                    continue
+        print(health_terms)
+        #checking if the medicine is present in the database through API's
+        medicines=[]      
+        for wt in word_tags:
+            try:
+                response = requests.post('http://localhost:5000/medicine', json={'word':wt}, timeout=(3))
+            except HTTPError as http_err:
+                print(f'HTTP error occurred: {http_err}')
+            except Exception as err:
+                print(f'Other error occurred: {err}')  # Python 3.6
+            else:
+                json_response = response.json()
+                if(json_response is not None):
+                    medicines.append(json_response['words'])
+                else:
+                    continue
+        print(medicines)
                 
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
