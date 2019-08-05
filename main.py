@@ -138,7 +138,7 @@ def upload_file():
         "radiation":    "The use of high-energy rays (such as x-rays) to kill or shrink cancer cells",
         "external radiation":   "The radiation come from a machine outside the body ",
         "brachytherapy or internal radiation":  "The radiation comes from a radioactive materials placed in the body near cancer cell",
-        "standard treatment":   "Treatment that has been scientifically tested, found to be safe and effective, and approved by the U.S. Food and Drug Administration (FDA). (Often called conventional treatment)", 
+        "treatment":   "Treatment that has been scientifically tested, found to be safe and effective, and approved by the U.S. Food and Drug Administration (FDA). (Often called conventional treatment)", 
         "targeted treatment":   "A form of cancer therapy that takes advantage of the biologic differences between cancer cells and healthy cells by “targeting” faulty genes or proteins that contribute to cancer growth. The treatment blocks the spread of cancer cells without damagin...",
         "follow-up care plan":  "A patient's plan written oncologist following treatment that summarizes the therapy(ies) and outlines long-term care needs.(This may include how often the person needs to see a doctor and any future tests needed. It may also include advice on healthy lif...",
         "late effects": "Side effects of cancer treatment that appear months or years after treatment has ended. (This may include physical and mental problems, as well as development of secondary cancer)",
@@ -157,7 +157,7 @@ def upload_file():
         "drug resistance":  "It is where tumour cells become resistant to chemotherapy",
         "allogeneic bmt":   "Healthy marrow is taken from a matched donor and used to replace the patients bone marrow which has been destroyed by high dose chemotherapy",
         "autologous bmt":   "In an autologous bone marrow transplant the marrow is first taken from the patient. The marrow is usually then purged with chemicals to kill any malignant cells in it",
-        "tumor markers":    "A substance in the body that may indicate the presence of cancer"
+        "tumor":    "A substance in the body that may indicate the presence of cancer"
                 }       
 
                 
