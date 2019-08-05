@@ -136,7 +136,7 @@ def upload_file():
                     
         for key in word2count.keys():
             word2count[key] = word2count[key]/max(word2count.values())
-        print(word2count)            
+               
         #Overall summary of the conversation
         sent2score = {}
         sent3score = {}
@@ -149,7 +149,8 @@ def upload_file():
                                 if word in ht:                
                                     sent2score[sentence] = 10
                                     
-                                    
+         print(sent2score)
+                                   
         #Medicine related summary of the conversation
         for sentence in sentences:
             for word in nltk.word_tokenize(sentence.lower()):
@@ -159,7 +160,7 @@ def upload_file():
                             for m in medicines:
                                 if word in m:
                                     sent3score[sentence] = 10
-                        
+        print(sent3score)                
         best_sentences = heapq.nlargest(5,sent2score,key=sent2score.get)
         best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
         #print(best_sentences)
