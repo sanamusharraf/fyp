@@ -125,6 +125,102 @@ def upload_file():
                     continue
         print(medicines)
                 
+        #Applying TF-IDF model
+        word2count = {}
+        for word in nltk.word_tokenize(clean_text):
+            if word not in stop_words:
+                if word not in word2count.keys():
+                    word2count[word] = 1 
+                else:
+                    word2count[word] += 1
+                    
+        for key in word2count.keys():
+            word2count[key] = word2count[key]/max(word2count.values())
+                    
+        #Overall summary of the conversation
+        sent2score = {}
+        sent3score = {}
+        for sentence in sentences:
+            for word in nltk.word_tokenize(sentence.lower()):
+                if word in word2count.keys():
+                    if len(sentence.split(' ')) < 30:
+                        if sentence not in sent2score.keys():
+                            for ht in health_terms.keys():
+                                if word in ht:                
+                                    sent2score[sentence] = 10
+                                    
+                                    
+        #Medicine related summary of the conversation
+        for sentence in sentences:
+            for word in nltk.word_tokenize(sentence.lower()):
+                if word in word2count.keys():
+                    if len(sentence.split(' ')) < 30:
+                        if sentence not in sent3score.keys():
+                            for m in medicines:
+                                if word in m:
+                                    sent3score[sentence] = 10
+                        
+        best_sentences = heapq.nlargest(5,sent2score,key=sent2score.get)
+        best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
+
+        #converting list into string of cancer terms
+        string_health_terms = '\n'.join(health_terms)
+
+        #converting list into string of medicine prescribed
+        string_medicine = '\n'.join(medicines)
+        
+
+        #Overall Summary
+        string_overall_summary = ''
+        for sentence in best_sentences:
+            string_overall_summary = string_overall_summary + sentence + '\n'
+            
+        #Medicine Summary
+        string_medicine_summary = ''
+        for sentence in best_sentence:
+            string_medicine_summary = string_medicine_summary + sentence + '\n'  
+            
+            
+        #fetching patient information from API's
+        try:
+            response = requests.post('http://34.68.232.47/patient', json={"id":"3"}, timeout=2)
+        except HTTPError as http_err:
+            print(f'HTTP error occurred: {http_err}')
+        except Exception as err:
+            print(f'Other error occurred: {err}')  # Python 3.6
+        else:
+            json_response = response.json()
+            email = json_response['email']
+            phoneNumber = json_response['phone']
+
+        #SMS Notification service 
+        # Your Account Sid and Auth Token from twilio.com/console
+        # DANGER! This is insecure. See http://twil.io/secure
+        account_sid = 'ACf4d7dbef3db9c3cb91bf5e0229e911e6'
+        auth_token = '06d66a99cf675e22b6bd459c9326c77f'
+        summary = 'Cancer Terms: \n'+string_health_terms + '\n\n Medicine Prescribed: \n' + string_medicine+ '\n\n Overall Summary: \n'+ string_overall_summary+ '\n Medicine Summary: \n'+ string_medicine_summary
+        client = Client(account_sid, auth_token)
+
+    
+        # message = client.messages \
+        #                 .create(
+        #                     body=summary,
+        #                     from_='+14803970895',
+        #                     to=phoneNumber
+        #                 )
+
+        #Email Notification
+        email_from = "ekohealthsolutions@gmail.com"
+        email_to = "sanamusharraf171@gmail.com"
+        message = summary
+        password = "ekohealth2019"
+        print(summary)
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.starttls()
+        server.login(email_from,password)
+        server.sendmail(email_from,email_to,message)
+        server.quit()
+
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
 def add_doctor():
