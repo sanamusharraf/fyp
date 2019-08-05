@@ -103,6 +103,7 @@ def upload_file():
                 print(f'Other error occurred: {err}')  # Python 3.6
             else:
                 json_response = response.json()
+                print(json_response)
                 if(json_response is not None):
                     health_terms.update({wt:json_response['meaning']})
                 else:
@@ -123,8 +124,7 @@ def upload_file():
                     medicines.append(json_response['words'])
                 else:
                     continue
-        print(medicines)
-                
+        
         #Applying TF-IDF model
         word2count = {}
         for word in nltk.word_tokenize(clean_text):
