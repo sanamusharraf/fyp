@@ -268,7 +268,7 @@ def upload_file():
         
         #converting list into string of cancer terms
         string_health_terms = '\n'.join(health_terms)
-        
+        print(health_terms)
         #converting list into string of medicine prescribed
         string_medicine = '\n'.join(medicines)
         
