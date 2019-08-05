@@ -184,17 +184,7 @@ def upload_file():
         print(string_overall_summary)
 
 
-        #Email Notification
-        email_from = "ekohealthsolutions@gmail.com"
-        email_to = "sanamusharraf171@gmail.com"
-        message = summary
-        password = "ekohealth2019"
-        print(summary)
-        server = smtplib.SMTP('smtp.gmail.com:587')
-        server.starttls()
-        server.login(email_from,password)
-        server.sendmail(email_from,email_to,message)
-        server.quit()
+        
 
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
