@@ -73,7 +73,7 @@ def upload_file():
         clean_text = re.sub(r'\W',' ',clean_text)
         clean_text = re.sub(r'\d',' ',clean_text)
         clean_text = re.sub(r'\s+',' ',clean_text)
-        print(clean_text)
+        
         sentences = nltk.sent_tokenize(text)
 
         stop_words = nltk.corpus.stopwords.words('english')    
@@ -81,16 +81,16 @@ def upload_file():
         #Figuring out cancer terms and medicine prescribed in the conversation
         #tokenizing the sentences
         words = nltk.word_tokenize(clean_text)
-        print(words)
+        
         #applying part of speech on each individual word
         tagged_words = nltk.pos_tag(words)
-        print(tagged_words)
+        
         #collecting all the nouns in a seperate list
         word_tags=[]
         for tw in tagged_words:
             if tw[1] == "NN" or tw[1] == "NNS" or tw[1] == "NNP" or tw[1] == "NNPS" or tw[1]=="JJ":
                 word_tags.append(tw[0])
-        print(word_tags)
+        
 
         #fetching cancer terms meaning from the API's
         health_term={
@@ -216,7 +216,19 @@ def upload_file():
         "panadol",
         "calpol" ]      
 
-        print(medicine)
+        #figuring out cancer terms
+        health_terms={}
+        for wt in word_tags:
+            if wt in health_term.keys():
+                health_terms.update({wt:health_term[wt]})
+                
+        #figuring out medicine terms
+        medicines=[]
+        for wt in word_tags:
+            if wt in medicine:
+                medicines.append(wt)
+        print(health_terms) 
+        print(medicines)   
 
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
