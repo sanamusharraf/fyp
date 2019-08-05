@@ -73,7 +73,7 @@ def upload_file():
         clean_text = re.sub(r'\W',' ',clean_text)
         clean_text = re.sub(r'\d',' ',clean_text)
         clean_text = re.sub(r'\s+',' ',clean_text)
-        
+        print(clean_text)
         sentences = nltk.sent_tokenize(text)
 
         stop_words = nltk.corpus.stopwords.words('english')    
