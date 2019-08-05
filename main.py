@@ -136,7 +136,7 @@ def upload_file():
                     
         for key in word2count.keys():
             word2count[key] = word2count[key]/max(word2count.values())
-                    
+        print(word2count)            
         #Overall summary of the conversation
         sent2score = {}
         sent3score = {}
@@ -162,8 +162,8 @@ def upload_file():
                         
         best_sentences = heapq.nlargest(5,sent2score,key=sent2score.get)
         best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
-        print(best_sentences)
-        print(best_sentence)
+        #print(best_sentences)
+        #print(best_sentence)
         #converting list into string of cancer terms
         string_health_terms = '\n'.join(health_terms)
 
@@ -182,7 +182,7 @@ def upload_file():
             string_medicine_summary = string_medicine_summary + sentence + '\n'  
             
             
-        print("string_overall_summary" + string_overall_summary)
+        #print("string_overall_summary" + string_overall_summary)
 
 
         
