@@ -45,52 +45,52 @@ def upload_file():
     finally:
         cursor.close()
         conn.close()
-        basepath = os.path.dirname(__file__)
-        filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
-        print(filepath)
+        # basepath = os.path.dirname(__file__)
+        # filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
+        # print(filepath)
 
-        wav_file = os.path.splitext(filepath)[0] + '.wav'
-        print(wav_file)
-        sound = AudioSegment.from_file(filepath)
-        sound.export(wav_file, format="wav")
-        os.remove(filepath)
+        # wav_file = os.path.splitext(filepath)[0] + '.wav'
+        # print(wav_file)
+        # sound = AudioSegment.from_file(filepath)
+        # sound.export(wav_file, format="wav")
+        # os.remove(filepath)
 
-        #speech to text module
-        rec = sr.Recognizer()
-        audioFile = os.path.abspath(os.path.join(basepath, "AudioFiles", wav_file))
-        with sr.AudioFile(audioFile) as sourceFile:
-            audio = rec.record(sourceFile) 
-        try:
-            text = rec.recognize_google(audio)
-        except Exception as e:
-            print(e)    
+        # #speech to text module
+        # rec = sr.Recognizer()
+        # audioFile = os.path.abspath(os.path.join(basepath, "AudioFiles", wav_file))
+        # with sr.AudioFile(audioFile) as sourceFile:
+        #     audio = rec.record(sourceFile) 
+        # try:
+        #     text = rec.recognize_google(audio)
+        # except Exception as e:
+        #     print(e)    
         
-        print(text)
+        # print(text)
 
-        #preprocessing the data
-        text = re.sub(r'\[[0-9]*\]',' ',text)
-        text = re.sub(r'\s+',' ',text)
-        clean_text = text.lower()
-        clean_text = re.sub(r'\W',' ',clean_text)
-        clean_text = re.sub(r'\d',' ',clean_text)
-        clean_text = re.sub(r'\s+',' ',clean_text)
-        print(clean_text)
-        sentences = nltk.sent_tokenize(text)
+        # #preprocessing the data
+        # text = re.sub(r'\[[0-9]*\]',' ',text)
+        # text = re.sub(r'\s+',' ',text)
+        # clean_text = text.lower()
+        # clean_text = re.sub(r'\W',' ',clean_text)
+        # clean_text = re.sub(r'\d',' ',clean_text)
+        # clean_text = re.sub(r'\s+',' ',clean_text)
+        # print(clean_text)
+        # sentences = nltk.sent_tokenize(text)
 
-        stop_words = nltk.corpus.stopwords.words('english')    
+        # stop_words = nltk.corpus.stopwords.words('english')    
 
-        #Figuring out cancer terms and medicine prescribed in the conversation
-        #tokenizing the sentences
-        words = nltk.word_tokenize(text)
-        print(words)
-        #applying part of speech on each individual word
-        tagged_words = nltk.pos_tag(words)
+        # #Figuring out cancer terms and medicine prescribed in the conversation
+        # #tokenizing the sentences
+        # words = nltk.word_tokenize(text)
+        # print(words)
+        # #applying part of speech on each individual word
+        # tagged_words = nltk.pos_tag(words)
 
-        #collecting all the nouns in a seperate list
-        word_tags=[]
-        for tw in tagged_words:
-            if tw[1] == "NN" or tw[1] == "NNS" or tw[1] == "NNP" or tw[1] == "NNPS":
-                word_tags.append(tw[0])
+        # #collecting all the nouns in a seperate list
+        # word_tags=[]
+        # for tw in tagged_words:
+        #     if tw[1] == "NN" or tw[1] == "NNS" or tw[1] == "NNP" or tw[1] == "NNPS":
+        #         word_tags.append(tw[0])
 
 
                                                     #ADD DOCTOR     
