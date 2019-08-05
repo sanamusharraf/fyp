@@ -31,6 +31,7 @@ def upload_file():
         print("Hi")
         
         file = request.files['file']
+        print(file)
         # filename = file.filename
         # f = '/'.join([target, filename])
         # print("Final Filename is "+ f)
