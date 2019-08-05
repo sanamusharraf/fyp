@@ -88,7 +88,7 @@ def upload_file():
         #collecting all the nouns in a seperate list
         word_tags=[]
         for tw in tagged_words:
-            if tw[1] == "NN" or tw[1] == "NNS" or tw[1] == "NNP" or tw[1] == "NNPS":
+            if tw[1] == "NN" or tw[1] == "NNS" or tw[1] == "NNP" or tw[1] == "NNPS" or tw[1]=="JJ":
                 word_tags.append(tw[0])
         print(word_tags)
 
