@@ -54,17 +54,17 @@ def upload_file():
         sound.export(wav_file, format="wav")
         os.remove(filepath)
 
-        # #speech to text module
-        # rec = sr.Recognizer()
-        # audioFile = os.path.abspath(os.path.join(basepath, "AudioFiles", wav_file))
-        # with sr.AudioFile(audioFile) as sourceFile:
-        #     audio = rec.record(sourceFile) 
-        # try:
-        #     text = rec.recognize_google(audio)
-        # except Exception as e:
-        #     print(e)    
+        #speech to text module
+        rec = sr.Recognizer()
+        audioFile = os.path.abspath(os.path.join(basepath, "AudioFiles", wav_file))
+        with sr.AudioFile(audioFile) as sourceFile:
+            audio = rec.record(sourceFile) 
+        try:
+            text = rec.recognize_google(audio)
+        except Exception as e:
+            print(e)    
         
-        # print(text)
+        print(text)
 
         # #preprocessing the data
         # text = re.sub(r'\[[0-9]*\]',' ',text)
