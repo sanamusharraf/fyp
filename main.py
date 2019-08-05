@@ -228,7 +228,47 @@ def upload_file():
             if wt in medicine:
                 medicines.append(wt)
         print(health_terms) 
-        print(medicines)   
+        print(medicines) 
+
+        #Applying TF-IDF model
+        word2count = {}
+        for word in nltk.word_tokenize(clean_text):
+            if word not in stop_words:
+                if word not in word2count.keys():
+                    word2count[word] = 1 
+                else:
+                    word2count[word] += 1
+                    
+        for key in word2count.keys():
+            word2count[key] = word2count[key]/max(word2count.values())
+                    
+        #Overall summary of the conversation
+        sent2score = {}
+        sent3score = {}
+        for sentence in sentences:
+            for word in nltk.word_tokenize(sentence.lower()):
+                if word in word2count.keys():
+                    if len(sentence.split(' ')) < 30:
+                        if sentence not in sent2score.keys():
+                            for ht in health_terms.keys():
+                                if word in ht:                
+                                    sent2score[sentence] = 10
+                                    
+                                    
+        #Medicine related summary of the conversation
+        for sentence in sentences:
+            for word in nltk.word_tokenize(sentence.lower()):
+                if word in word2count.keys():
+                    if len(sentence.split(' ')) < 30:
+                        if sentence not in sent3score.keys():
+                            for m in medicines:
+                                if word in m:
+                                    sent3score[sentence] = 10
+                        
+        best_sentences = heapq.nlargest(5,sent2score,key=sent2score.get)
+        best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
+        print(best_sentence)
+        print(best_sentences)
 
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
