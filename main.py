@@ -84,7 +84,7 @@ def upload_file():
         print(words)
         #applying part of speech on each individual word
         tagged_words = nltk.pos_tag(words)
-
+        print(tagged_words)
         #collecting all the nouns in a seperate list
         word_tags=[]
         for tw in tagged_words:
