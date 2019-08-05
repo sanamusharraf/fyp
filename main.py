@@ -241,7 +241,7 @@ def upload_file():
                     
         for key in word2count.keys():
             word2count[key] = word2count[key]/max(word2count.values())
-        print(word2count)            
+                    
         #Overall summary of the conversation
         sent2score = {}
         sent3score = {}
@@ -253,7 +253,7 @@ def upload_file():
                             for ht in health_terms.keys():
                                 if word in ht:                
                                     sent2score[sentence] = 10
-                                    
+        print(sent2score)                            
                                     
         #Medicine related summary of the conversation
         for sentence in sentences:
