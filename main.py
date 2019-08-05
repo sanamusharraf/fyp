@@ -257,13 +257,12 @@ def upload_file():
         for sentence in sentences:
             for word in nltk.word_tokenize(sentence.lower()):
                 if word in word2count.keys():
-                    if len(sentence.split(' ')) < 30:
-                        if sentence not in sent3score.keys():
-                            for m in medicines:
-                                if word in m:
-                                    sent3score[sentence] = 10
+                    if sentence not in sent3score.keys():
+                        for m in medicines:
+                            if word in m:
+                                sent3score[sentence] = 10
         print(sent3score) 
-                       
+
         best_sentences = heapq.nlargest(5,sent2score,key=sent2score.get)
         best_sentence = heapq.nlargest(5,sent3score,key=sent3score.get)
         
