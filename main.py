@@ -22,7 +22,6 @@ def upload_file():
         conn = mysql.connect()
         cursor = conn.cursor()
         _patient_email = request.form['patientemail']
-        _patient_phone = request.form['patientphone']
         _doctorid = request.form['doctorid']
         target = os.path.join(app.config['UPLOAD_FOLDER'], 'AudioFiles')
         print("Target name is" + target)
@@ -45,9 +44,9 @@ def upload_file():
     finally:
         cursor.close()
         conn.close()
-        # basepath = os.path.dirname(__file__)
-        # filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
-        # print(filepath)
+        basepath = os.path.dirname(__file__)
+        filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
+        print(filepath)
 
         # wav_file = os.path.splitext(filepath)[0] + '.wav'
         # print(wav_file)
