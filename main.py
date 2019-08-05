@@ -44,6 +44,10 @@ def upload_file():
     finally:
         cursor.close()
         conn.close()
+        basepath = os.path.dirname(__file__)
+        filepath = os.path.abspath(os.path.join(basepath, "AudioFiles", filename))
+        print(filepath)
+
        
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
