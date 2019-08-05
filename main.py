@@ -149,7 +149,7 @@ def upload_file():
                                 if word in ht:                
                                     sent2score[sentence] = 10
                                     
-         print(sent2score)
+        print(sent2score)
                                    
         #Medicine related summary of the conversation
         for sentence in sentences:
