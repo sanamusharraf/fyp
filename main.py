@@ -90,7 +90,7 @@ def upload_file():
         for tw in tagged_words:
             if tw[1] == "NN" or tw[1] == "NNS" or tw[1] == "NNP" or tw[1] == "NNPS":
                 word_tags.append(tw[0])
-
+        print(word_tags)
 
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
