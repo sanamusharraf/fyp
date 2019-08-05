@@ -75,12 +75,12 @@ def upload_file():
         clean_text = re.sub(r'\s+',' ',clean_text)
         print(clean_text)
         sentences = nltk.sent_tokenize(text)
-        
+
         stop_words = nltk.corpus.stopwords.words('english')    
 
         #Figuring out cancer terms and medicine prescribed in the conversation
         #tokenizing the sentences
-        words = nltk.word_tokenize(text)
+        words = nltk.word_tokenize(clean_text)
         print(words)
         #applying part of speech on each individual word
         tagged_words = nltk.pos_tag(words)
