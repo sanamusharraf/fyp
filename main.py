@@ -63,8 +63,9 @@ def upload_file():
             text = rec.recognize_google(audio)
         except Exception as e:
             print(e)    
+        
         print(text)
-
+        print("hi")
                                                     #ADD DOCTOR     
 @app.route('/add_doctor',methods=['POST'])
 def add_doctor():
