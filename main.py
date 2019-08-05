@@ -248,12 +248,11 @@ def upload_file():
         for sentence in sentences:
             for word in nltk.word_tokenize(sentence.lower()):
                 if word in word2count.keys():
-                    if len(sentence.split(' ')) < 30:
-                        if sentence not in sent2score.keys():
-                            for ht in health_terms.keys():
-                                print(ht)
-                                if word in ht:                
-                                    sent2score[sentence] = 10
+                    if sentence not in sent2score.keys():
+                        for ht in health_terms.keys():
+                            print(ht)
+                            if word in ht:                
+                                sent2score[sentence] = 10
                                   
                                     
         #Medicine related summary of the conversation
