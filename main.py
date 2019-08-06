@@ -23,12 +23,6 @@ def upload_file():
         cursor = conn.cursor()
         _patient_email = request.form['patientemail']
         _doctorid = request.form['doctorid']
-        target = os.path.join(app.config['UPLOAD_FOLDER'], 'AudioFiles')
-        print("Target name is" + target)
-
-        if not os.path.isdir(target):
-            os.mkdir(target)
-        
         text = request.form['report']
         resp = jsonify('Report Added successfully')
         resp.status_code = 200
@@ -201,8 +195,7 @@ def upload_file():
         for wt in word_tags:
             if wt in medicine:
                 medicines.append(wt)
-        print(health_terms) 
-        print(medicines) 
+        
 
         #Applying TF-IDF model
         word2count = {}
