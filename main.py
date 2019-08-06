@@ -6,15 +6,13 @@ from flask import flash, request
 from flask_bcrypt import generate_password_hash,check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required,get_jwt_identity
-from pydub import AudioSegment
 import re
 import nltk
 import heapq
-from twilio.rest import Client
 import smtplib
 import requests
 from requests.exceptions import HTTPError
-import speech_recognition as sr
+
 
 @app.route('/upload',methods=['POST'])
 def upload_file():
